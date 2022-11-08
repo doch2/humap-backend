@@ -1,4 +1,4 @@
-# HuMap
+# HuMap-backend
 
 네트워크 형식 표시를 통한 인간관계 종합 관리 서비스 '소중한 인맥을 한 눈에 담다, HuMap'입니다. 서비스의 서버 Repository입니다.
   
