@@ -17,7 +17,7 @@ CORS(app)
 
 model = SentenceTransformer('sentence-transformers/xlm-r-100langs-bert-base-nli-stsb-mean-tokens')
 
-def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates):
+def max_sum_sim(doc_embedding, candidate_embeddings, words, top_n, nr_candidates, candidates):
     # 문서와 각 키워드들 간의 유사도
     distances = cosine_similarity(doc_embedding, candidate_embeddings)
 
@@ -63,10 +63,10 @@ def main():
     doc_embedding = model.encode([doc])
     candidate_embeddings = model.encode(candidates)
 
-    result = max_sum_sim(doc_embedding, candidate_embeddings, candidates, top_n=5, nr_candidates=10)
+    result = max_sum_sim(doc_embedding, candidate_embeddings, candidates, top_n=5, nr_candidates=10, candidates=candidates)
 
 
-    jsonify({"result": result}), 200
+    return jsonify({"result": result}), 200
 
 
 if __name__ == '__main__':
