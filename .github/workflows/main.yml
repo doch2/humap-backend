@@ -1,0 +1,34 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+jobs:
+  deploy:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect repository
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: hjcm_shopping
+          yaml: |-
+            name: hjcm_shopping_check_tracking_number
+            app: dockerfile
+            options:
+              ports: 8080
+              dockerfile: Dockerfile
+              git:
+                branch: main
+                url: https://github.com/doch2/hjcm_shopping_check_tracking_number.git
+              starts: wget -O /app/firebase-adminkey.json ${{ secrets.FIREBASE_ADMINKEY_URL }} && python server.py
